@@ -8,7 +8,7 @@ import { shareReplay, take, takeUntil } from 'rxjs/operators';
 import { WorkerMessageService } from './worker-message-service-shim';
 
 const gltfLoader = new GLTFLoader().register(
-  parser => new VRMCoreLoaderPlugin(parser, { helperRoot: scene, autoUpdateHumanBones: true }),
+  parser => new VRMCoreLoaderPlugin(parser, { autoUpdateHumanBones: true }),
 );
 
 let currentModel: VRM | undefined;
