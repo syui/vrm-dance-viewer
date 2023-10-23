@@ -9,6 +9,9 @@ const copyrightRegex = /^\s*(©|\([Cc]\)|\[[Cc]\])/;
 
 const modal = document.querySelector<HTMLDivElement>('#dialogmodal')!;
 
+let icon_url = "https://yui.syui.ai/icon/avatar.png";
+let model_icon_url = "https://raw.githubusercontent.com/syui/img/master/other/ai_vrm_0004.png";
+
 let hasMeta = false;
 let autoShown = true;
 
@@ -182,7 +185,8 @@ function prepareModel(meta: VRMMeta) {
         body.appendChild(
           h('div.ts-image.is-rounded.flow-right',
             h('img', {
-              src: arrayBufferToObjectUrl(meta.texture as any),
+              //src: arrayBufferToObjectUrl(meta.texture as any),
+              src: model_icon_url,
               onload: (e: Event) => URL.revokeObjectURL((e.target as HTMLImageElement).src),
             }),
           ),
@@ -413,6 +417,23 @@ function getAllowUserIcon(user: VRM0Meta['allowedUserName'] | VRM1Meta['avatarPe
       return h('span.ts-icon.is-lock-icon.is-spaced');
     default: return h('span.ts-icon.is-circle-question-icon.is-spaced');
   }
+}
+
+import axios, {isCancel, AxiosError} from 'axios';
+function icon_load(){
+	axios.get(icon_url, {
+		responseType: "blob"
+	})
+	.then(response => {
+		setIcon(response.data);
+		const blob = new Blob([response.data], {
+			type: response.data.type
+		});
+	})
+}
+
+if (icon_url !== null) {
+	icon_load();
 }
 
 workerService.on({ displayMeta });
