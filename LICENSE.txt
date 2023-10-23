@@ -1,0 +1,81 @@
+/*!
+ * @pixiv/three-vrm v1.0.2
+ * VRM file loader for three.js.
+ *
+ * Copyright (c) 2019-2021 pixiv Inc.
+ * @pixiv/three-vrm is distributed under MIT License
+ * https://github.com/pixiv/three-vrm/blob/release/LICENSE
+ */
+
+/*!
+ * @pixiv/three-vrm-core v1.0.1
+ * The implementation of core features of VRM, for @pixiv/three-vrm
+ *
+ * Copyright (c) 2020-2021 pixiv Inc.
+ * @pixiv/three-vrm-core is distributed under MIT License
+ * https://github.com/pixiv/three-vrm/blob/release/LICENSE
+ */
+
+/*!
+ * @pixiv/three-vrm-materials-hdr-emissive-multiplier v1.0.0
+ * Support VRMC_hdr_emissiveMultiplier for @pixiv/three-vrm
+ *
+ * Copyright (c) 2020-2021 pixiv Inc.
+ * @pixiv/three-vrm-materials-hdr-emissive-multiplier is distributed under MIT License
+ * https://github.com/pixiv/three-vrm/blob/release/LICENSE
+ */
+
+/*!
+ * @pixiv/three-vrm-materials-mtoon v1.0.0
+ * MToon (toon material) module for @pixiv/three-vrm
+ *
+ * Copyright (c) 2020-2021 pixiv Inc.
+ * @pixiv/three-vrm-materials-mtoon is distributed under MIT License
+ * https://github.com/pixiv/three-vrm/blob/release/LICENSE
+ */
+
+/*!
+ * @pixiv/three-vrm-node-constraint v1.0.0
+ * Node constraint module for @pixiv/three-vrm
+ *
+ * Copyright (c) 2020-2021 pixiv Inc.
+ * @pixiv/three-vrm-node-constraint is distributed under MIT License
+ * https://github.com/pixiv/three-vrm/blob/release/LICENSE
+ */
+
+/*!
+ * @pixiv/three-vrm-springbone v1.0.0
+ * Spring bone module for @pixiv/three-vrm
+ *
+ * Copyright (c) 2020-2021 pixiv Inc.
+ * @pixiv/three-vrm-springbone is distributed under MIT License
+ * https://github.com/pixiv/three-vrm/blob/release/LICENSE
+ */
+
+/*!
+ * Cross-Browser Split 1.1.1
+ * Copyright 2007-2012 Steven Levithan <stevenlevithan.com>
+ * Available under the MIT License
+ * ECMAScript compliant, uniform cross-browser split method
+ */
+
+/*! *****************************************************************************
+Copyright (c) Microsoft Corporation.
+
+Permission to use, copy, modify, and/or distribute this software for any
+purpose with or without fee is hereby granted.
+
+THE SOFTWARE IS PROVIDED "AS IS" AND THE AUTHOR DISCLAIMS ALL WARRANTIES WITH
+REGARD TO THIS SOFTWARE INCLUDING ALL IMPLIED WARRANTIES OF MERCHANTABILITY
+AND FITNESS. IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR ANY SPECIAL, DIRECT,
+INDIRECT, OR CONSEQUENTIAL DAMAGES OR ANY DAMAGES WHATSOEVER RESULTING FROM
+LOSS OF USE, DATA OR PROFITS, WHETHER IN AN ACTION OF CONTRACT, NEGLIGENCE OR
+OTHER TORTIOUS ACTION, ARISING OUT OF OR IN CONNECTION WITH THE USE OR
+PERFORMANCE OF THIS SOFTWARE.
+***************************************************************************** */
+
+/**
+ * @license
+ * Copyright 2010-2022 Three.js Authors
+ * SPDX-License-Identifier: MIT
+ */
