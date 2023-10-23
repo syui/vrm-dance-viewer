@@ -115,9 +115,9 @@ function updateHead(model: VRM, deltaTime: number) {
     matrix.lookAt(
       bone.getWorldPosition(position),
       camera.getWorldPosition(position2),
-      vector3.set(0, 1, 0),
+      vector3.set(0, 3, 1),
     );
-    vector3.set(0, 0, 1).applyMatrix4(matrix);
+    vector3.set(0, 0, 3).applyMatrix4(matrix);
     if (vector3.z < 0)
       euler.setFromRotationMatrix(matrix).set(
         clampByRadian(-euler.x, -HEAD_CLAMP_ANGLE, HEAD_CLAMP_ANGLE),
