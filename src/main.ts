@@ -14,6 +14,7 @@ import workerService from './host/worker-service';
 const loadingPromises: Promise<any>[] = [];
 let isLoading = false;
 let hasLoadModel = false;
+let model_url = "https://card.syui.ai/obj/ai.vrm";
 
 function onFileSelected(files: FileList) {
   let animFile: File | undefined;
@@ -169,5 +170,45 @@ self.addEventListener('dragover', e => {
   if (e.dataTransfer) e.dataTransfer.dropEffect = 'none';
 });
 self.addEventListener('drop', interceptEvent);
+
+import axios, {isCancel, AxiosError} from 'axios';
+function model_load(){
+	axios.get(model_url, {
+		responseType: "blob"
+	})
+	.then(response => {
+		console.log(response.data);
+		loadingPromises.push(loadModel(response.data));
+		hasLoadModel = true;
+  triggerLoading();
+		const blob = new Blob([response.data], {
+			type: response.data.type
+		});
+	})
+}
+
+if (model_url !== null) {
+	model_load();
+}
+
+//test : default model
+//import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader';
+//import { scene } from './worker/scene/scene';
+//let loader = new GLTFLoader();
+//window.onload = function(){
+//	loader.load(
+//		model_url,
+//		(gltf) => {
+//			const vrm = gltf.userData.vrm;
+//			scene.add(gltf.scene)
+//		},
+//		(xhr) => {
+//			console.log( `${( xhr.loaded / xhr.total * 100 )}% loaded` );
+//		},
+//		(error) => {
+//			console.log(error)
+//		}
+//	)
+//}
 
 if (loadingPromises.length) triggerLoading();
