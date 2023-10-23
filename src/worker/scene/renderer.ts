@@ -1,5 +1,5 @@
 import { WebGLRenderer } from 'three';
-
+import * as THREE from 'three';
 export let renderer: WebGLRenderer | undefined;
 
 export function init(canvas: HTMLCanvasElement | OffscreenCanvas) {
@@ -7,5 +7,6 @@ export function init(canvas: HTMLCanvasElement | OffscreenCanvas) {
     antialias: true,
     canvas,
   });
-  return renderer;
+		renderer.outputEncoding = THREE.sRGBEncoding;
+		return renderer;
 }
