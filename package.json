@@ -19,14 +19,14 @@
     "./src/main.css"
   ],
   "dependencies": {
-    "@fortawesome/fontawesome-free": "^6.2.0",
+    "@fortawesome/fontawesome-free": "latest",
     "@pixiv/three-vrm": "latest",
     "@types/hyperscript": "latest",
     "@types/i18next": "latest",
-    "@types/linkify-it": "^3.0.2",
-    "@types/resize-observer-browser": "^0.1.7",
+    "@types/linkify-it": "latest",
+    "@types/resize-observer-browser": "latest",
     "@types/three": "latest",
-    "@types/webpack-env": "^1.18.0",
+    "@types/webpack-env": "latest",
     "axios": "latest",
     "dseg": "latest",
     "hyperscript": "latest",
@@ -35,13 +35,13 @@
     "i18next-http-backend": "^1.4.4",
     "i18next-webpack-backend": "latest",
     "linkify-it": "^4.0.1",
-    "mmd-parser": "^1.0.4",
-    "rxjs": "^7.5.6",
-    "three": "^0.144.0",
-    "tlds": "^1.231.0",
+    "mmd-parser": "latest",
+    "rxjs": "latest",
+    "three": "latest",
+    "tlds": "latest",
     "tocas": "latest",
-    "ts-loader": "^9.4.1",
-    "tslib": "^2.4.0"
+    "ts-loader": "latest",
+    "tslib": "latest"
   },
   "devDependencies": {
     "awesome-typescript-loader": "^5",

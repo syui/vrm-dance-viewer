@@ -1,6 +1,6 @@
 import { Subject } from 'rxjs';
-// import { take } from 'rxjs/operators';
-// import { initWorkerContext, remoteCanvasObservable } from '../../utils/remote-canvas';
+import { take } from 'rxjs/operators';
+//import { initWorkerContext, remoteCanvasObservable } from '../../utils/remote-canvas';
 import { camera } from './camera';
 import { init as initLights } from './lights';
 import { init as initRenderer } from './renderer';
@@ -29,7 +29,7 @@ export function init(canvas: HTMLCanvasElement) {
   const renderer = initRenderer(canvas);
   const controls = initControls(canvas, deltaTimeObservable, true);
   initPostProcessing();
-  handleResize(canvas.width, canvas.height);
+  //handleResize(canvas.width, canvas.height);
   deltaTimeObservable.subscribe(() => setCenter(controls.target));
   renderer.info.autoReset = false;
   setInterval(notifyRendererStats, 1000, renderer);

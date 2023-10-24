@@ -48,6 +48,7 @@ export async function loadVRM(data: ArrayBufferLike | string) {
   const { vrmCore } = gltf.userData;
   VRMUtils.rotateVRM0(vrmCore);
   VRMUtils.removeUnnecessaryJoints(gltf.scene);
+		VRMUtils.removeUnnecessaryVertices(gltf.scene);
   return vrmCore as VRM;
 }
 
