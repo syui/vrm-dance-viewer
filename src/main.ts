@@ -1,12 +1,11 @@
 import './main.css';
 import './i18n';
-import './worker';
-import { firstValueFrom } from 'rxjs';
 import { ajax } from 'rxjs/ajax';
 import { canvas, loadAnimation, loadModel, toggleAutoRotate, toggleBloom, toggleLights } from './host';
-import { hideInfo, setAutoShown, showMoreInfo } from './host/meta-display';
+import { setAutoShown, showMoreInfo } from './host/meta-display';
 import registerStats from './host/status';
 import { registerDropZone } from './utils/drag-drop';
+import { showSnack } from './utils/tocas-helpers';
 import { observeMediaQuery } from './utils/rx-helpers';
 import { interceptEvent, isInFrame } from './utils/helper-functions';
 import workerService from './host/worker-service';
@@ -14,6 +13,7 @@ import workerService from './host/worker-service';
 const loadingPromises: Promise<any>[] = [];
 let isLoading = false;
 let hasLoadModel = false;
+let card_time = 22;
 
 function onFileSelected(files: FileList) {
   let animFile: File | undefined;
@@ -64,58 +64,28 @@ function errorToSnackBar(error?: any) {
   let message: string | undefined;
   if (typeof error?.message === 'string')
     message = error.message;
-  // if (message) showSnack(message);
+  if (message) showSnack(message);
 }
 
 const searchParams = new URLSearchParams(location.search);
 
-if (isInFrame())
-  searchParams.set('nostats', '');
-else
-  registerDropZone(canvas, data => onFileSelected(data.files));
-
-if (searchParams.has('nostats'))
-  for (const element of document.querySelectorAll('.credits, .stats'))
-    element.remove();
-else
-  registerStats(
-    document.getElementById('fps')!,
-    document.getElementById('draw-call')!,
-    document.getElementById('face-count')!,
-  );
-
-if (searchParams.has('notoolbar'))
-  document.querySelector('.menu')?.classList.add('hidden');
-
-if (searchParams.has('norotate'))
-  toggleAutoRotate();
-
-if (searchParams.has('dark'))
-  toggleLights();
-
-if (searchParams.has('noinfo'))
-  setAutoShown(false);
-
-if (searchParams.has('nobloom'))
-  toggleBloom();
-
 const vrmUrl = searchParams.get('vrm');
 if (vrmUrl)
   loadingPromises.push((async () => {
-    const { response } = await firstValueFrom(ajax<Blob>({
+    const { response } = await ajax({
       url: vrmUrl,
       responseType: 'blob',
-    }));
+    }).toPromise();
     return loadModel(response);
   })());
 
 const animUrl = searchParams.get('anim');
 if (animUrl)
   loadingPromises.push((async () => {
-    const { response } = await firstValueFrom(ajax<Blob>({
+    const { response } = await ajax({
       url: animUrl,
       responseType: 'blob',
-    }));
+    }).toPromise();
     let animType = searchParams.get('animtype');
     if (!animType) {
       if (animUrl.endsWith('.vmd'))
@@ -141,33 +111,74 @@ if (targetY) workerService.trigger('setTargetY', Number(targetY));
 const targetZ = searchParams.get('tz');
 if (targetZ) workerService.trigger('setTargetZ', Number(targetZ));
 
-if (searchParams.has('nocontrols'))
-  workerService.trigger('enableControls', false);
+let date = new Date();
+var num_h =	date.getHours();
+var model_url = "https://card.syui.ai/obj/ai.vrm";
+var anime_url = "https://card.syui.ai/obj/motion_v0.bvh";
+var item_url = "https://card.syui.ai/obj/ai_card_v2.vrm";
+let num_model = Math.floor(Math.random() * 7) + 1
 
-document.querySelector('#lights')?.addEventListener('click', toggleLights);
-document.querySelector('#bloom')?.addEventListener('click', toggleBloom);
-document.querySelector('#rotate')?.addEventListener('click', toggleAutoRotate);
-const fileSelect = document.querySelector<HTMLInputElement>('#selectfile');
-document.querySelector('#open')?.addEventListener('click', () => fileSelect?.click());
-fileSelect?.addEventListener('change', e => {
-  const fileSelect = e.target as HTMLInputElement;
-  if (fileSelect.files?.length) onFileSelected(fileSelect.files);
-  fileSelect.form?.reset();
-  fileSelect.blur();
-});
-document.querySelector('#info')?.addEventListener('click', showMoreInfo);
-document.querySelector('#closeinfo')?.addEventListener('click', hideInfo);
+if (card_time == num_h){
+	var model_url = "https://card.syui.ai/obj/ai_card_v2.vrm";
+}	else if (num_model == 1) {
+	var model_url = "https://card.syui.ai/obj/ai_v1.vrm";
+}
 
-observeMediaQuery('(prefers-color-scheme:dark)').subscribe(matches =>
-  document.querySelectorAll('.ts:not(.dimmer)').forEach(element =>
-    element.classList[matches ? 'add' : 'remove']('inverted'),
-  ),
-);
+import axios, {isCancel, AxiosError} from 'axios';
+function model_load(){
+	axios.get(model_url, {
+		responseType: "blob"
+	})
+	.then(response => {
+		loadingPromises.push(loadModel(response.data));
+		hasLoadModel = true;
+  triggerLoading();
+		const blob = new Blob([response.data], {
+			type: response.data.type
+		});
+	})
+}
+function anime_load(){
+	axios.get(anime_url, {
+		responseType: "blob"
+	})
+	.then(response_anime => {
+		loadingPromises.push(loadAnimation(response_anime.data, "bvh"));
+		hasLoadModel = true;
+  triggerLoading();
+		const blob = new Blob([response_anime.data], {
+			type: response_anime.data.type
+		});
+	})
+}
 
-self.addEventListener('dragover', e => {
-  interceptEvent(e);
-  if (e.dataTransfer) e.dataTransfer.dropEffect = 'none';
-});
-self.addEventListener('drop', interceptEvent);
+function item_load(){
+	axios.get(item_url, {
+		responseType: "blob"
+	})
+	.then(response_item => {
+		loadingPromises.push(loadModel(response_item.data));
+		hasLoadModel = false;
+  triggerLoading();
+		const blob = new Blob([response_item.data], {
+			type: response_item.data.type
+		});
+	})
+}
+
+if (model_url !== null) {
+	model_load();
+}
+
+if (anime_url !== null && card_time == num_h){
+	window.addEventListener('DOMContentLoaded', function(){
+		setTimeout(() => {
+			anime_load();
+		}, 5000);
+		setTimeout(() => {
+			model_load();
+		}, 10000);
+	});
+}
 
 if (loadingPromises.length) triggerLoading();

@@ -1,30 +1,70 @@
 import h from 'hyperscript';
-// import { RemoteCanvasHost } from '../utils/remote-canvas';
+import { RemoteCanvasHost } from '../utils/remote-canvas';
 import { blob2ArrayBuffer, interceptEvent } from '../utils/helper-functions';
-import { observeResize, observeVisibilty } from '../utils/rx-helpers';
+import { observeVisibilty } from '../utils/rx-helpers';
 import workerService from './worker-service';
 import { isSupported as isVRSupported } from '../utils/xr-detect';
 
-export const canvas = document.getElementById('canvas-container')!.appendChild(h('canvas', { tabIndex: 0 }));
+export const canvas = document.body.appendChild(h('canvas', { tabIndex: 0 }));
 canvas.addEventListener('contextmenu', interceptEvent);
-canvas.addEventListener('click', interceptEvent);
 canvas.tabIndex = 0;
 
-workerService.trigger('initAll', canvas);
-observeResize(canvas).subscribe(
-  ({ contentRect: { width, height } }) => workerService.trigger('handleResize', width * devicePixelRatio, height * devicePixelRatio),
+const remoteCanvasHost = new RemoteCanvasHost(workerService, canvas);
+remoteCanvasHost.eventFilters.set(PointerEvent, {
+  type: true,
+  pointerType: true,
+  ctrlKey: true,
+  altKey: true,
+  metaKey: true,
+  shiftKey: true,
+  button: true,
+  clientX: true,
+  clientY: true,
+  pageX: true,
+  pageY: true,
+}).set(KeyboardEvent, {
+  type: true,
+  ctrlKey: true,
+  altKey: true,
+  metaKey: true,
+  shiftKey: true,
+  keyCode: true,
+}).set(WheelEvent, {
+  type: true,
+  deltaX: true,
+  deltaY: true,
+}).set(TouchEvent, {
+  type: true,
+  touches: [{
+    pageX: true,
+    pageY: true,
+  }],
+});
+remoteCanvasHost.resizeObservable.subscribe(({ contentRect: { width, height } }) =>
+  workerService.trigger('handleResize', width * devicePixelRatio, height * devicePixelRatio),
 );
+
+remoteCanvasHost.interceptEvent = function(e: Event) {
+  console.log(e.type);
+  switch (e.type) {
+    case 'pointerdown': case 'pointerup':
+    case 'touchstart': case 'touchend':
+      break;
+    default:
+      interceptEvent(e);
+  }
+};
 
 export async function loadModel(file: Blob | ArrayBuffer) {
   if (file instanceof Blob)
     file = await blob2ArrayBuffer(file);
-  return workerService.call('loadModel', file);
+  return workerService.callAndTransfer('loadModel', [file], [file]);
 }
 
 export async function loadAnimation(file: Blob | ArrayBuffer, type: string) {
   if (file instanceof Blob)
     file = await blob2ArrayBuffer(file);
-  return workerService.call('loadAnimation', file, type);
+  return workerService.callAndTransfer('loadAnimation', [file, type], [file]);
 }
 
 export function toggleLights() {
