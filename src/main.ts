@@ -114,14 +114,25 @@ if (targetZ) workerService.trigger('setTargetZ', Number(targetZ));
 let date = new Date();
 var num_h =	date.getHours();
 var model_url = "https://card.syui.ai/obj/ai.vrm";
+var model_url_light = "https://card.syui.ai/obj/ai_v1.vrm";
+var model_url_sword = "https://card.syui.ai/obj/ai_mode_sword_c.vrm";
+var model_url_normal = "https://card.syui.ai/obj/ai_mode_normal_c.vrm";
+var model_url_ai = "https://card.syui.ai/obj/ai_mode_ai_c.vrm";
+var model_url_card = "https://card.syui.ai/obj/ai_card_v2.vrm";
 var anime_url = "https://card.syui.ai/obj/motion_v0.bvh";
 var item_url = "https://card.syui.ai/obj/ai_card_v2.vrm";
-let num_model = Math.floor(Math.random() * 7) + 1
+let num_model = Math.floor(Math.random() * 12) + 1
 
 if (card_time == num_h){
-	var model_url = "https://card.syui.ai/obj/ai_card_v2.vrm";
+	var model_url = model_url_card;
 }	else if (num_model == 1) {
-	var model_url = "https://card.syui.ai/obj/ai_v1.vrm";
+	var model_url = model_url_light;
+} else if (num_model == 2) {
+	var model_url = model_url_normal;
+} else if (num_model == 3) {
+	var model_url = model_url_ai;
+} else if (num_model == 4) {
+	var model_url = model_url_sword;
 }
 
 import axios, {isCancel, AxiosError} from 'axios';
@@ -138,6 +149,7 @@ function model_load(){
 		});
 	})
 }
+
 function anime_load(){
 	axios.get(anime_url, {
 		responseType: "blob"
