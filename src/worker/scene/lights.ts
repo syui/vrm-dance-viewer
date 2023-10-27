@@ -35,13 +35,21 @@ function tick() {
 	for(let i=0; i<s_length; i++){
 		var color = "0x" + Math.floor(Math.random() * 16777215).toString(16);
 		let geometry = new THREE.PlaneGeometry( s_plane_scale, s_plane_scale );
-		let material = new THREE.MeshBasicMaterial({
-			color: 0x000000,
-			//color: Number(color),
-			opacity: 0.8,
-			transparent: true,
-			side: THREE.DoubleSide
-		});
+		if (num_hh == 0){
+			var material = new THREE.MeshBasicMaterial({
+				color: Number(color),
+				opacity: 0.8,
+				transparent: true,
+				side: THREE.DoubleSide
+			});
+		} else {
+			var material = new THREE.MeshBasicMaterial({
+				color: 0x000000,
+				opacity: 0.8,
+				transparent: true,
+				side: THREE.DoubleSide
+			});
+		}
 		s_plane[i] = new THREE.Mesh( geometry, material );
 		s_plane[i].position.x = s_xp * (Math.random() - 0.5);
 		s_plane[i].position.y = s_yp * (Math.random() - 0.5);
@@ -57,7 +65,7 @@ function tick() {
 }
 
 console.log(card_time, num_h);
-if (card_time == num_hh){
+if (card_time == num_hh || 0 == num_hh){
 	tick();
 }
 
