@@ -114,13 +114,13 @@ if (targetZ) workerService.trigger('setTargetZ', Number(targetZ));
 let date = new Date();
 var num_h =	date.getHours();
 var model_url = "https://card.syui.ai/obj/ai.vrm";
-var model_url_light = "https://card.syui.ai/obj/ai_v1.vrm";
-var model_url_sword = "https://card.syui.ai/obj/ai_mode_sword_c.vrm";
-var model_url_normal = "https://card.syui.ai/obj/ai_mode_normal_c.vrm";
-var model_url_ai = "https://card.syui.ai/obj/ai_mode_ai_c.vrm";
-var model_url_card = "https://card.syui.ai/obj/ai_card_v2.vrm";
+var model_url_light = "https://card.syui.ai/obj/ai_mode_zen_light.vrm";
+var model_url_sword = "https://card.syui.ai/obj/ai_mode_sword.vrm";
+var model_url_normal = "https://card.syui.ai/obj/ai_mode_normal.vrm";
+var model_url_ai = "https://card.syui.ai/obj/ai_mode_ai.vrm";
+var model_url_card = "https://card.syui.ai/obj/ai_mode_card.vrm";
 var anime_url = "https://card.syui.ai/obj/motion_v0.bvh";
-var item_url = "https://card.syui.ai/obj/ai_card_v2.vrm";
+var item_url = "https://card.syui.ai/obj/ai_mode_card.vrm";
 let num_model = Math.floor(Math.random() * 12) + 1
 
 if (card_time == num_h){
