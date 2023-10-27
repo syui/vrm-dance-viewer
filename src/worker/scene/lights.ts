@@ -10,8 +10,12 @@ scene.fog = new Fog(bgColor, 3, 10);
 var targetIntensity = 1;
 let card_time = 22;
 let date = new Date();
-var num_h =	date.getHours() * 0.1;
 var num_hh =	date.getHours();
+if (num_hh > 19){
+	var num_h =	0.3;
+} else {
+	var num_h =	date.getHours() * 0.1;
+}
 var targetIntensity = num_h;
 
 export let currentIntensity = 0;
