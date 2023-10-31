@@ -83,8 +83,7 @@ export function init(updater: Observable<number>) {
 export function update(deltaTime: number) {
   currentIntensity += (targetIntensity - currentIntensity) * Math.min(1, deltaTime * 4);
   ambiantLight.intensity = currentIntensity;
-  light.intensity = 0.40+ 0.75 * currentIntensity;
-  //light.intensity = 0.25+ 0.75 * currentIntensity;
+  light.intensity = 0.25+ 0.75 * currentIntensity;
   bgColor.set(BACKGROUND_COLOR_DIM).lerp(BACKGROUND_COLOR, currentIntensity);
   scene.fog?.color.set(bgColor);
   if (scene.background instanceof Color)
