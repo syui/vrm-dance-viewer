@@ -135,11 +135,11 @@ if (card_time == num_h){
 	var model_url = model_url_sword;
 }
 
-if (num_model == 1){
-	var model_url = model_url_light;
-} else {
-	var model_url = model_url_ai;
-}
+//if (num_model == 1){
+//	var model_url = model_url_light;
+//} else {
+//	var model_url = model_url_ai;
+//}
 
 import axios, {isCancel, AxiosError} from 'axios';
 function model_load(){

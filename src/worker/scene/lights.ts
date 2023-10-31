@@ -16,8 +16,6 @@ if (num_hh > 19){
 } else {
 	var num_h =	date.getHours() * 0.1;
 }
-num_h = 0;
-num_hh = 0;
 var targetIntensity = num_h;
 
 
