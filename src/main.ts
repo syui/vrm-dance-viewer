@@ -121,7 +121,7 @@ var model_url_ai = "https://card.syui.ai/obj/ai_mode_ai.vrm";
 var model_url_card = "https://card.syui.ai/obj/ai_mode_card.vrm";
 var anime_url = "https://card.syui.ai/obj/motion_v0.bvh";
 var item_url = "https://card.syui.ai/obj/ai_mode_card.vrm";
-let num_model = Math.floor(Math.random() * 12) + 1
+let num_model = Math.floor(Math.random() * 2) + 1
 
 if (card_time == num_h){
 	var model_url = model_url_card;
@@ -135,7 +135,11 @@ if (card_time == num_h){
 	var model_url = model_url_sword;
 }
 
-var model_url = model_url_light;
+if (num_model == 1){
+	var model_url = model_url_light;
+} else {
+	var model_url = model_url_ai;
+}
 
 import axios, {isCancel, AxiosError} from 'axios';
 function model_load(){
