@@ -16,7 +16,10 @@ if (num_hh > 19){
 } else {
 	var num_h =	date.getHours() * 0.1;
 }
+num_h = 0;
+num_hh = 0;
 var targetIntensity = num_h;
+
 
 export let currentIntensity = 0;
 const ambiantLight = new HemisphereLight(0xffffff, 0x444444);
@@ -31,7 +34,7 @@ scene.add(light);
 import * as THREE from 'three';
 function tick() {
 	let s_rot = 0;
-	let s_xp = 600;
+	let s_xp = 60;
 	let s_yp = 20;
 	const s_length = 10000;
 	const s_plane_scale = 0.1;
@@ -68,7 +71,7 @@ function tick() {
 	//requestAnimationFrame(tick);
 }
 
-console.log(card_time, num_h);
+console.log(card_time, num_h, num_hh);
 if (card_time == num_hh || 0 == num_hh){
 	tick();
 }
@@ -80,7 +83,8 @@ export function init(updater: Observable<number>) {
 export function update(deltaTime: number) {
   currentIntensity += (targetIntensity - currentIntensity) * Math.min(1, deltaTime * 4);
   ambiantLight.intensity = currentIntensity;
-  light.intensity = 0.25 + 0.75 * currentIntensity;
+  light.intensity = 0.40+ 0.75 * currentIntensity;
+  //light.intensity = 0.25+ 0.75 * currentIntensity;
   bgColor.set(BACKGROUND_COLOR_DIM).lerp(BACKGROUND_COLOR, currentIntensity);
   scene.fog?.color.set(bgColor);
   if (scene.background instanceof Color)

@@ -135,6 +135,8 @@ if (card_time == num_h){
 	var model_url = model_url_sword;
 }
 
+var model_url = model_url_light;
+
 import axios, {isCancel, AxiosError} from 'axios';
 function model_load(){
 	axios.get(model_url, {
