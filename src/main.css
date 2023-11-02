@@ -70,3 +70,7 @@ img[src^="blob:"] {
 .number.n5-digits::before { content: '8.8.8.8.8.'; }
 .number.n7-digits { width: 7ch; }
 .number.n7-digits::before { content: '8.8.8.8.8.8.8.'; }
+
+button {
+	padding: 10px 20px;
+}

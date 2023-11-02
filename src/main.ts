@@ -114,6 +114,7 @@ if (targetZ) workerService.trigger('setTargetZ', Number(targetZ));
 let date = new Date();
 var num_h =	date.getHours();
 var model_url = "https://card.syui.ai/obj/ai.vrm";
+var model_url_default = "https://card.syui.ai/obj/ai.vrm";
 var model_url_light = "https://card.syui.ai/obj/ai_mode_zen_light.vrm";
 var model_url_ten = "https://card.syui.ai/obj/ai_mode_ten.vrm";
 var model_url_sword = "https://card.syui.ai/obj/ai_mode_sword.vrm";
@@ -122,25 +123,25 @@ var model_url_normal = "https://card.syui.ai/obj/ai_mode_normal.vrm";
 var model_url_ai = "https://card.syui.ai/obj/ai_mode_ai.vrm";
 var model_url_card = "https://card.syui.ai/obj/ai_mode_card.vrm";
 var anime_url = "https://card.syui.ai/obj/motion_v0.bvh";
-var item_url = "https://card.syui.ai/obj/ai_mode_card.vrm";
+var item_url = "https://card.syui.ai/obj/ai_mode_sword.vrm";
 let num_model = Math.floor(Math.random() * 12) + 1
 
-if (card_time == num_h){
-	var model_url = model_url_card;
-}	else if (num_model == 1) {
-	var model_url = model_url_light;
-} else if (num_model == 2) {
-	var model_url = model_url_normal;
-} else if (num_model == 3) {
-	var model_url = model_url_ai;
-} else if (num_model == 4) {
-	var model_url = model_url_sword;
-} else if (num_model == 5) {
-	var model_url = model_url_sword_hand;
-} else if (num_model == 6) {
-	var model_url = model_url_ten;
-}
-var model_url = model_url_ten;
+//if (card_time == num_h){
+//	var model_url = model_url_card;
+//}	else if (num_model == 1) {
+//	var model_url = model_url_light;
+//} else if (num_model == 2) {
+//	var model_url = model_url_normal;
+//} else if (num_model == 3) {
+//	var model_url = model_url_ai;
+//} else if (num_model == 4) {
+//	var model_url = model_url_sword;
+//} else if (num_model == 5) {
+//	var model_url = model_url_sword_hand;
+//} else if (num_model == 6) {
+//	var model_url = model_url_ten;
+//}
+//var model_url = model_url_ten;
 
 //if (num_model == 1){
 //	var model_url = model_url_light;
@@ -195,15 +196,61 @@ if (model_url !== null) {
 	model_load();
 }
 
-if (anime_url !== null && card_time == num_h){
-	window.addEventListener('DOMContentLoaded', function(){
+function getModels(a?:string){
+	if (a == "card"){
+		var model_url = model_url_card;
+	} else if (a == "ten"){
+		var model_url = model_url_ten;
+	} else if (a == "sword"){
+		var model_url = model_url_sword_hand;
+
+} else if (a == "sword_out"){
+		var model_url = model_url_sword;
+	} else if (a == "ai"){
+		var model_url = model_url_light;
+	} else if (a == "ai_normal"){
+		var model_url = model_url_ai;
+	} else {
+		var model_url = model_url_default;
+	}
+	axios.get(model_url, {
+		responseType: "blob"
+	})
+	.then(response => {
+		loadingPromises.push(loadModel(response.data));
+		hasLoadModel = true;
+		triggerLoading();
+		const blob = new Blob([response.data], {
+			type: response.data.type
+		});
+	})
+}
+
+const el = document.querySelector('#btn-models') as HTMLInputElement | null;
+if(el != null) {
+	el.addEventListener('click', (e:Event) => getModels(el.value));
+}
+const ela = document.querySelector('#btn-models_a') as HTMLInputElement | null;
+if(ela != null) {
+	ela.addEventListener('click', (e:Event) => getModels(ela.value));
+}
+const elb = document.querySelector('#btn-models_b') as HTMLInputElement | null;
+if(elb != null) {
+	elb.addEventListener('click', (e:Event) => getModels(elb.value));
+	elb.addEventListener('click', function(){
 		setTimeout(() => {
-			anime_load();
-		}, 5000);
-		setTimeout(() => {
-			model_load();
-		}, 10000);
+			item_load();
+		}, 7000);
 	});
+}
+
+const elc = document.querySelector('#btn-models_c') as HTMLInputElement | null;
+if(elc != null) {
+	elc.addEventListener('click', (e:Event) => getModels(elc.value));
+}
+const eld = document.querySelector('#btn-models_d') as HTMLInputElement | null;
+if(eld != null) {
+	eld.addEventListener('click', (e:Event) => getModels(eld.value));
 }
 
 if (loadingPromises.length) triggerLoading();

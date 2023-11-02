@@ -17,9 +17,6 @@ if (num_hh > 19){
 	var num_h =	date.getHours() * 0.1;
 }
 
-var num_h = 0;
-var num_hh = 0;
-
 var targetIntensity = num_h;
 
 export let currentIntensity = 0;
@@ -56,12 +53,6 @@ function tick() {
 		s_plane[i].position.z = s_zp * (Math.random() - 0.5);
 		scene.add(s_plane[i]);
 	}
-	//for(let i=0; i<s_length; i++){
-	//	s_plane[i].rotation.y += (Math.random()*0.1);
-	//	s_plane[i].rotation.x += (Math.random()*0.1);
-	//	s_plane[i].rotation.z += (Math.random()*0.1);
-	//}   
-	//requestAnimationFrame(tick);
 }
 
 function tick_sky() {
@@ -87,12 +78,6 @@ function tick_sky() {
 		s_plane[i].position.z = s_zp * (Math.random() - 0.5);
 		scene.add(s_plane[i]);
 	}
-	//for(let i=0; i<s_length; i++){
-	//	s_plane[i].rotation.y += (Math.random()*0.1);
-	//	s_plane[i].rotation.x += (Math.random()*0.1);
-	//	s_plane[i].rotation.z += (Math.random()*0.1);
-	//}   
-	//requestAnimationFrame(tick);
 }
 
 function tick_ten() {
@@ -108,8 +93,8 @@ function tick_ten() {
 		let geometry = new THREE.PlaneGeometry( s_plane_scale, s_plane_scale );
 		var material = new THREE.MeshBasicMaterial({
 			color: 0xfff700,
-			opacity: 0.8,
-			transparent: true,
+			opacity: 1,
+			transparent: false,
 			side: THREE.DoubleSide
 		});
 		s_plane[i] = new THREE.Mesh( geometry, material );
@@ -118,17 +103,10 @@ function tick_ten() {
 		s_plane[i].position.z = s_zp * (Math.random() - 0.5);
 		scene.add(s_plane[i]);
 	}
-	//for(let i=0; i<s_length; i++){
-	//	s_plane[i].rotation.y += (Math.random()*0.1);
-	//	s_plane[i].rotation.x += (Math.random()*0.1);
-	//	s_plane[i].rotation.z += (Math.random()*0.1);
-	//}   
-	//requestAnimationFrame(tick);
 }
 
-//console.log(card_time, num_h, num_hh);
+tick();
 if (card_time == num_hh || 0 == num_hh){
-	tick();
 	tick_ten();
 	tick_sky();
 }
