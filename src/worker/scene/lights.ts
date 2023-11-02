@@ -16,8 +16,11 @@ if (num_hh > 19){
 } else {
 	var num_h =	date.getHours() * 0.1;
 }
-var targetIntensity = num_h;
 
+var num_h = 0;
+var num_hh = 0;
+
+var targetIntensity = num_h;
 
 export let currentIntensity = 0;
 const ambiantLight = new HemisphereLight(0xffffff, 0x444444);
@@ -32,33 +35,25 @@ scene.add(light);
 import * as THREE from 'three';
 function tick() {
 	let s_rot = 0;
-	let s_xp = 60;
-	let s_yp = 20;
+	let s_xp = 30;
+	let s_yp = 0;
+	let s_zp = 30;
 	const s_length = 10000;
-	const s_plane_scale = 0.1;
+	const s_plane_scale = 0.01;
 	const s_plane = [];
 	for(let i=0; i<s_length; i++){
 		var color = "0x" + Math.floor(Math.random() * 16777215).toString(16);
 		let geometry = new THREE.PlaneGeometry( s_plane_scale, s_plane_scale );
-		if (num_hh == 0){
-			var material = new THREE.MeshBasicMaterial({
-				color: Number(color),
-				opacity: 0.8,
-				transparent: true,
-				side: THREE.DoubleSide
-			});
-		} else {
-			var material = new THREE.MeshBasicMaterial({
-				color: 0x000000,
-				opacity: 0.8,
-				transparent: true,
-				side: THREE.DoubleSide
-			});
-		}
+		var material = new THREE.MeshBasicMaterial({
+			color: Number(color),
+			opacity: 0.8,
+			transparent: true,
+			side: THREE.DoubleSide
+		});
 		s_plane[i] = new THREE.Mesh( geometry, material );
 		s_plane[i].position.x = s_xp * (Math.random() - 0.5);
 		s_plane[i].position.y = s_yp * (Math.random() - 0.5);
-		s_plane[i].position.z = s_yp * (Math.random() - 0.5);
+		s_plane[i].position.z = s_zp * (Math.random() - 0.5);
 		scene.add(s_plane[i]);
 	}
 	//for(let i=0; i<s_length; i++){
@@ -69,9 +64,73 @@ function tick() {
 	//requestAnimationFrame(tick);
 }
 
-console.log(card_time, num_h, num_hh);
+function tick_sky() {
+	let s_rot = 0;
+	let s_xp = 10;
+	let s_yp = 10;
+	let s_zp = 10;
+	const s_length = 10000;
+	const s_plane_scale = 0.01;
+	const s_plane = [];
+	for(let i=0; i<s_length; i++){
+		var color = "0x" + Math.floor(Math.random() * 16777215).toString(16);
+		let geometry = new THREE.PlaneGeometry( s_plane_scale, s_plane_scale );
+		var material = new THREE.MeshBasicMaterial({
+			color: Number(color),
+			opacity: 0.8,
+			transparent: true,
+			side: THREE.DoubleSide
+		});
+		s_plane[i] = new THREE.Mesh( geometry, material );
+		s_plane[i].position.x = s_xp * (Math.random() - 0.5);
+		s_plane[i].position.y = s_yp * (Math.random() - 0.5);
+		s_plane[i].position.z = s_zp * (Math.random() - 0.5);
+		scene.add(s_plane[i]);
+	}
+	//for(let i=0; i<s_length; i++){
+	//	s_plane[i].rotation.y += (Math.random()*0.1);
+	//	s_plane[i].rotation.x += (Math.random()*0.1);
+	//	s_plane[i].rotation.z += (Math.random()*0.1);
+	//}   
+	//requestAnimationFrame(tick);
+}
+
+function tick_ten() {
+	let s_rot = 0;
+	let s_xp = 0.8;
+	let s_yp = 1.6;
+	let s_zp = 0.8;
+	const s_length = 100;
+	const s_plane_scale = 0.01;
+	const s_plane = [];
+	for(let i=0; i<s_length; i++){
+		var color = "0x" + Math.floor(Math.random() * 16777215).toString(16);
+		let geometry = new THREE.PlaneGeometry( s_plane_scale, s_plane_scale );
+		var material = new THREE.MeshBasicMaterial({
+			color: 0xfff700,
+			opacity: 0.8,
+			transparent: true,
+			side: THREE.DoubleSide
+		});
+		s_plane[i] = new THREE.Mesh( geometry, material );
+		s_plane[i].position.x = s_xp * (Math.random() - 0.5);
+		s_plane[i].position.y = s_yp * (Math.random() - 0.5);
+		s_plane[i].position.z = s_zp * (Math.random() - 0.5);
+		scene.add(s_plane[i]);
+	}
+	//for(let i=0; i<s_length; i++){
+	//	s_plane[i].rotation.y += (Math.random()*0.1);
+	//	s_plane[i].rotation.x += (Math.random()*0.1);
+	//	s_plane[i].rotation.z += (Math.random()*0.1);
+	//}   
+	//requestAnimationFrame(tick);
+}
+
+//console.log(card_time, num_h, num_hh);
 if (card_time == num_hh || 0 == num_hh){
 	tick();
+	tick_ten();
+	tick_sky();
 }
 
 export function init(updater: Observable<number>) {

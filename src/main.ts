@@ -115,13 +115,15 @@ let date = new Date();
 var num_h =	date.getHours();
 var model_url = "https://card.syui.ai/obj/ai.vrm";
 var model_url_light = "https://card.syui.ai/obj/ai_mode_zen_light.vrm";
+var model_url_ten = "https://card.syui.ai/obj/ai_mode_ten.vrm";
 var model_url_sword = "https://card.syui.ai/obj/ai_mode_sword.vrm";
+var model_url_sword_hand = "https://card.syui.ai/obj/ai_mode_sword_hand.vrm";
 var model_url_normal = "https://card.syui.ai/obj/ai_mode_normal.vrm";
 var model_url_ai = "https://card.syui.ai/obj/ai_mode_ai.vrm";
 var model_url_card = "https://card.syui.ai/obj/ai_mode_card.vrm";
 var anime_url = "https://card.syui.ai/obj/motion_v0.bvh";
 var item_url = "https://card.syui.ai/obj/ai_mode_card.vrm";
-let num_model = Math.floor(Math.random() * 2) + 1
+let num_model = Math.floor(Math.random() * 12) + 1
 
 if (card_time == num_h){
 	var model_url = model_url_card;
@@ -133,7 +135,12 @@ if (card_time == num_h){
 	var model_url = model_url_ai;
 } else if (num_model == 4) {
 	var model_url = model_url_sword;
+} else if (num_model == 5) {
+	var model_url = model_url_sword_hand;
+} else if (num_model == 6) {
+	var model_url = model_url_ten;
 }
+var model_url = model_url_ten;
 
 //if (num_model == 1){
 //	var model_url = model_url_light;

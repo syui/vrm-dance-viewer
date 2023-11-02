@@ -11,8 +11,9 @@ floor.position.y = -0.5;
 floor.rotation.x = -Math.PI / 2;
 scene.add(floor);
 
-//const grid = new GridHelper(50, 100, 0xFF0000, 0xFF0000);
-const grid = new GridHelper(50, 100, 0xAAAAAA, 0xAAAAAA);
+const grid = new GridHelper(0, 0, 0xfff700, 0xfff700);
+//const grid = new GridHelper(50, 100, 0xfff700, 0xfff700);
+//const grid = new GridHelper(50, 100, 0xAAAAAA, 0xAAAAAA);
 scene.add(grid);
 
 export function setCenter({ x, z }: Vector3) {
