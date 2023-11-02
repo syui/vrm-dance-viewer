@@ -105,10 +105,12 @@ function tick_ten() {
 	}
 }
 
-tick();
-if (card_time == num_hh || 0 == num_hh){
-	tick_ten();
-	tick_sky();
+if (!navigator.userAgent.match(/iPhone|Android.+Mobile/)) {
+	tick();
+	if (card_time == num_hh || 0 == num_hh){
+		tick_ten();
+		tick_sky();
+	}
 }
 
 export function init(updater: Observable<number>) {
