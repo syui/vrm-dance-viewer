@@ -111,13 +111,24 @@ if (targetY) workerService.trigger('setTargetY', Number(targetY));
 const targetZ = searchParams.get('tz');
 if (targetZ) workerService.trigger('setTargetZ', Number(targetZ));
 
+let api_url_local = "https://api.syui.ai/users/"
 let url = new URL(window.location.href);
 let params = url.searchParams;
-if(params.get('id') != null){
-	var api_url = "/api/users/" + params.get('id');
+
+if(url.hostname == "localhost"){
+	if(params.get('id') != null){
+		var api_url = "/api/users/" + params.get('id');
+	} else {
+		var api_url = "/api/users/" + 2;
+	}
 } else {
-	var api_url = "/api/users/" + 2;
+	if(params.get('id') != null){
+		var api_url = api_url_local + params.get('id');
+	} else {
+		var api_url = api_url_local + 2;
+	}
 }
+
 let date = new Date();
 var num_h =	date.getHours();
 var test_url = "https://card.syui.ai/obj/"
