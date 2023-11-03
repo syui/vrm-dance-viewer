@@ -190,9 +190,9 @@ function status_load(){
 			let html_model_c = document.getElementById('btn-models_c') as HTMLInputElement | null
 			let html_model_d = document.getElementById('btn-models_d') as HTMLInputElement | null
 
-			if (res.data.model === true){
-				model_load();
-			}
+			//if (res.data.model === true){
+			//	model_load();
+			//}
 
 			if (res.data.model === false && html_menu != null){
 				html_menu.insertAdjacentHTML('afterbegin', "<li>model : " + res.data.model + "</li>");
@@ -228,6 +228,7 @@ function status_load(){
 
 if (model_url !== null) {
 	status_load();
+	model_load();
 }
 
 function getModels(a?:string){
