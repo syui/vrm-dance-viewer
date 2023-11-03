@@ -111,43 +111,29 @@ if (targetY) workerService.trigger('setTargetY', Number(targetY));
 const targetZ = searchParams.get('tz');
 if (targetZ) workerService.trigger('setTargetZ', Number(targetZ));
 
+let url = new URL(window.location.href);
+let params = url.searchParams;
+if(params.get('id') != null){
+	var api_url = "/api/users/" + params.get('id');
+} else {
+	var api_url = "/api/users/" + 2;
+}
 let date = new Date();
 var num_h =	date.getHours();
-var model_url = "https://card.syui.ai/obj/ai.vrm";
-var model_url_default = "https://card.syui.ai/obj/ai.vrm";
-var model_url_light = "https://card.syui.ai/obj/ai_mode_zen_light.vrm";
-var model_url_ten = "https://card.syui.ai/obj/ai_mode_ten.vrm";
-var model_url_sword = "https://card.syui.ai/obj/ai_mode_sword.vrm";
-var model_url_sword_hand = "https://card.syui.ai/obj/ai_mode_sword_hand.vrm";
-var model_url_normal = "https://card.syui.ai/obj/ai_mode_normal.vrm";
-var model_url_ai = "https://card.syui.ai/obj/ai_mode_ai.vrm";
-var model_url_card = "https://card.syui.ai/obj/ai_mode_card.vrm";
-var anime_url = "https://card.syui.ai/obj/motion_v0.bvh";
-var item_url = "https://card.syui.ai/obj/ai_mode_sword.vrm";
+var test_url = "https://card.syui.ai/obj/"
+var test_url = "./obj/"
+var model_url = test_url + "ai.vrm";
+var model_url_default = test_url + "ai.vrm";
+var model_url_light = test_url + "ai_mode_zen_light.vrm";
+var model_url_ten = test_url + "ai_mode_ten.vrm";
+var model_url_sword = test_url + "ai_mode_sword.vrm";
+var model_url_sword_hand = test_url + "ai_mode_sword_hand.vrm";
+var model_url_normal = test_url + "ai_mode_normal.vrm";
+var model_url_ai = test_url + "ai_mode_ai.vrm";
+var model_url_card = test_url + "ai_mode_card.vrm";
+var anime_url = test_url + "motion_v0.bvh";
+var item_url = test_url + "ai_mode_sword.vrm";
 let num_model = Math.floor(Math.random() * 12) + 1
-
-//if (card_time == num_h){
-//	var model_url = model_url_card;
-//}	else if (num_model == 1) {
-//	var model_url = model_url_light;
-//} else if (num_model == 2) {
-//	var model_url = model_url_normal;
-//} else if (num_model == 3) {
-//	var model_url = model_url_ai;
-//} else if (num_model == 4) {
-//	var model_url = model_url_sword;
-//} else if (num_model == 5) {
-//	var model_url = model_url_sword_hand;
-//} else if (num_model == 6) {
-//	var model_url = model_url_ten;
-//}
-//var model_url = model_url_ten;
-
-//if (num_model == 1){
-//	var model_url = model_url_light;
-//} else {
-//	var model_url = model_url_ai;
-//}
 
 import axios, {isCancel, AxiosError} from 'axios';
 function model_load(){
@@ -192,8 +178,56 @@ function item_load(){
 	})
 }
 
+function status_load(){
+		axios.get(api_url, {
+			responseType: "json"
+		})
+		.then(res => {
+			let html_menu = document.querySelector('#menu') as HTMLInputElement | null;
+			let html_model = document.getElementById('btn-models') as HTMLInputElement | null
+			let html_model_a = document.getElementById('btn-models_a') as HTMLInputElement | null
+			let html_model_b = document.getElementById('btn-models_b') as HTMLInputElement | null
+			let html_model_c = document.getElementById('btn-models_c') as HTMLInputElement | null
+			let html_model_d = document.getElementById('btn-models_d') as HTMLInputElement | null
+
+			if (res.data.model === true){
+				model_load();
+			}
+
+			if (res.data.model === false && html_menu != null){
+				html_menu.insertAdjacentHTML('afterbegin', "<li>model : " + res.data.model + "</li>");
+				html_menu.insertAdjacentHTML('afterbegin', "<li>@" + res.data.username + "</li>");
+			}
+
+			if (res.data.model === true && html_menu != null){
+				html_menu.insertAdjacentHTML('afterbegin', "<li>limit : Lv " + res.data.model_limit + "</li>");
+				html_menu.insertAdjacentHTML('afterbegin', "<li>skill : Lv " + res.data.model_skill + "</li>");
+				html_menu.insertAdjacentHTML('afterbegin', "<li>attack : Lv " + res.data.model_attach + "</li>");
+				html_menu.insertAdjacentHTML('afterbegin', "<li>mode : Lv " + res.data.model_mode + "</li>");
+				html_menu.insertAdjacentHTML('afterbegin', "<li>model : " + res.data.model + "</li>");
+				html_menu.insertAdjacentHTML('afterbegin', "<li>@" + res.data.username + "</li>");
+			} 
+
+			if (res.data.model_skill === 0 && html_model != null){
+				html_model.style.display = "none"; 
+			} 
+			if (res.data.model_limit === 0 && html_model_a != null){
+				html_model_a.style.display = "none"; 
+			} 
+			if (res.data.model_attach === 0 && html_model_b != null){
+				html_model_b.style.display = "none"; 
+			} 
+			if (res.data.model_mode === 0 && html_model_c != null){
+				html_model_c.style.display = "none"; 
+			} 
+			if (res.data.model === false && html_model_d != null){
+				html_model_d.style.display = "none"; 
+			} 
+		})
+}
+
 if (model_url !== null) {
-	model_load();
+	status_load();
 }
 
 function getModels(a?:string){
@@ -203,8 +237,7 @@ function getModels(a?:string){
 		var model_url = model_url_ten;
 	} else if (a == "sword"){
 		var model_url = model_url_sword_hand;
-
-} else if (a == "sword_out"){
+	} else if (a == "sword_out"){
 		var model_url = model_url_sword;
 	} else if (a == "ai"){
 		var model_url = model_url_light;
@@ -224,6 +257,18 @@ function getModels(a?:string){
 			type: response.data.type
 		});
 	})
+}
+
+
+function getMenus() {
+		var x = document.querySelector('#menu') as HTMLInputElement | null;
+		if (x != null) {
+			if (x.style.display === "none") {
+				x.style.display = "block";
+			} else {
+				x.style.display = "none";
+			}
+		}
 }
 
 const el = document.querySelector('#btn-models') as HTMLInputElement | null;
@@ -251,6 +296,11 @@ if(elc != null) {
 const eld = document.querySelector('#btn-models_d') as HTMLInputElement | null;
 if(eld != null) {
 	eld.addEventListener('click', (e:Event) => getModels(eld.value));
+}
+
+const el_menu = document.querySelector('#btn-menu') as HTMLInputElement | null;
+if(el_menu != null) {
+	el_menu.addEventListener('click', (e:Event) => getMenus());
 }
 
 if (loadingPromises.length) triggerLoading();

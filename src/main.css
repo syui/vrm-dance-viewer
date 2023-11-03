@@ -74,3 +74,12 @@ img[src^="blob:"] {
 button {
 	padding: 10px 20px;
 }
+
+div#menu li {
+	list-style: none;
+}
+
+div#menu {
+    padding: 20px;
+    background-color: #d9edff;
+}

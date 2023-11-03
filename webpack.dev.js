@@ -12,9 +12,18 @@ module.exports = merge(common, {
     contentBase: path.join(__dirname, 'dist'),
     compress: true,
     port: 8080,
-  },
-
-  module: {
+			proxy: {
+				'/api/users/': {
+					target: 'https://api.syui.ai/users/',
+					secure: false,
+					changeOrigin: true,
+					pathRewrite: {
+						'^/api/users' : ''
+					}
+				}
+			}
+		},
+	module: {
     rules: [{
       enforce: 'pre',
       test: /\.js$/,

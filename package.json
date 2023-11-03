@@ -29,6 +29,7 @@
     "@types/webpack-env": "latest",
     "axios": "^1.5.1",
     "dseg": "latest",
+    "http-proxy-middleware": "^2.0.6",
     "hyperscript": "latest",
     "i18next": "latest",
     "i18next-browser-languagedetector": "latest",
