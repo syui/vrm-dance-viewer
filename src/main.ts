@@ -113,7 +113,11 @@ if (targetZ) workerService.trigger('setTargetZ', Number(targetZ));
 
 let api_url_local = "https://api.syui.ai/users/"
 let url = new URL(window.location.href);
-let params = url.searchParams;
+const params = new URLSearchParams(window.location.search);
+
+if(url.hostname == "vrm.syui.ai"){
+		var api_url = "";
+}
 
 if(url.hostname == "localhost"){
 	if(params.get('id') != null){
